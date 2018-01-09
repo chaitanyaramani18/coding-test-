@@ -1,0 +1,122 @@
+{% load static %}
+<!DOCTYPE html>
+
+<html lang="">
+<head>
+<title>{{ user }}</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<link href="{% static 'css/bootstrap.css' %}" rel="stylesheet" type="text/css" media="all">
+
+
+<link href="{% static 'css/layout.css' %}" rel="stylesheet" type="text/css" media="all">
+<link href="{% static 'css/font-awesome.css' %}" rel="stylesheet" type="text/css" media="all">
+<link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet" type="text/css" media="all">
+<link href="{% static 'css/custom-flexslider.css' %}" rel="stylesheet" type="text/css" media="all">
+
+</head>
+<body id="top">
+
+<div class="wrapper row0">
+  <div id="topbar" class="hoc clear"> 
+    <div class="fl_left">
+      <h1 style="background: white;color:#1F8BEC;"><a href="#">Homely Rentals</a></h1>
+      <p style="color:#1F8BEC;">perfect rental site!</p>
+    </div>
+    <div class="fl_right">
+      <ul>
+        <li>Welcome <strong style="color:#1F8BEC;">{{ user }}</strong></li>
+        <li><a href="{% url 'logout' %}">Logout</a></li>
+
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="wrapper row3" style="background: url('/static/images/Home-Rentals.jpg') no-repeat center center fixed;background-color: rgba(23, 22, 21, 0.7) !important;background-blend-mode: multiply !important;">
+
+  <main class="hoc container clear" style="padding:40px 0 0 0;"> 
+    <!-- main body -->
+    <div class="sidebar one_quarter first"> 
+      <!-- <nav class="sdb_holder"> -->
+        <ul style="list-style: None;">
+          <li>
+          <a href="{% url 'addProperties' %}">
+            <button type="submit" class="btn" style="background:#1F8BEC;">
+              Add propery
+            </button>
+          </a>
+          </li>
+      </nav>
+      
+    </div>
+
+    <div style="clear: both;margin-top: 10px"> 
+
+      <div class="col-md-12" style="border:1px solid #f8f1f1; background: #f9f9f9; padding: 10px 0 0px 20px;">
+      <h1>My Properties</h1>
+      </div>
+
+
+      {% for i in properties %}
+
+      <div class="col-md-12" style="border:1px solid #f8f1f1; background: #f9f9f9; padding: 15px 0;margin-top: 2px">
+        
+        <div class="col-md-3">
+         <img style="width: 200px; height: 125px;" src="/{{i.image}}">
+        
+      </div>
+       <div class="col-md-7">
+       <b>Property : </b>{{ i.id }}<br>
+        <strong> Description : </strong> {{ i.description }}
+           <br>
+           <strong> Located in : </strong> {{ i.location }} <br>
+           <strong> Availability : </strong> {% if i.availability %} Yes {% else %} No {% endif %}<br>
+           <b>Published on : </b>{{i.date | date:'Y-m-d H:i'}}
+            <br>
+      </div>
+      <div class="col-md-2">
+         <a href="/editProperties/{{i.id}}/">
+         <button style="width:100%; margin-bottom: 10px; float:left">Edit</button></a>
+           <a href="/deleteProperties/{{i.id}}/">
+           <button style="width:100%; margin-bottom: 10px; float:left">Delete</button></a>
+        
+      </div>
+      </div>
+     
+           
+
+
+      {% endfor %}
+      <div class="pagination" style="width: 400px;float: right;margin-top: 10px">
+            {% if properties.has_previous %}
+                <a href="?page={{ properties.previous_page_number }}" class="btn" style="width:125px;float:left">previous</a>
+            {% endif %}
+
+                <span style="width: 150px;float: left; margin-top: 5px">Page {{ properties.number }} of {{ properties.paginator.num_pages }}.</span>
+
+            {% if properties.has_next %}
+                <a href="?page={{ properties.next_page_number }}" style="width:125px;float:left" class="btn">next</a>
+            {% endif %}
+      </div>
+    </div>
+
+    <div class="clear"></div>
+  </main>
+</div>
+
+<div class="wrapper row4 bgded overlay" style="background:#fff;">
+  <footer id="footer" class="hoc clear" style="padding:5px 0 0 0;"> 
+    
+    </footer>
+</div>
+
+    <a id="backtotop" href="#top"><i class="fa fa-chevron-up"></i></a>
+<!-- JAVASCRIPTS -->
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'js/jquery.backtotop.js' %}"></script>
+<script src="{% static 'js/jquery.mobilemenu.js' %}"></script>
+<script src="{% static 'js/jquery.flexslider-min.js' %}"></script>
+
+ </body>
+</html>
